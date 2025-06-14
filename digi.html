@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Analysis: Client vs Competitors</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-group label {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        select, input {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .table-container {
+            padding: 0;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #495057, #6c757d);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 11;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .keyword-cell {
+            font-weight: 500;
+            background: white !important;
+            position: sticky;
+            left: 0;
+            border-right: 2px solid #dee2e6;
+            min-width: 120px;
+        }
+        
+        .client-data {
+            background-color: #d4edda !important;
+            font-weight: 600;
+        }
+        
+        .competitor-data {
+            text-align: center;
+        }
+        
+        .density-high {
+            background-color: #fff3cd;
+            font-weight: 600;
+        }
+        
+        .density-medium {
+            background-color: #d1ecf1;
+        }
+        
+        .density-low {
+            background-color: #f8d7da;
+        }
+        
+        .stats-row {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+            font-weight: 600;
+        }
+        
+        .gap-analysis {
+            margin: 20px 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .gap-analysis h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        
+        .recommendations {
+            margin: 20px 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #d4edda, #a8d8a8);
+            border-radius: 10px;
+            border-left: 5px solid #28a745;
+        }
+        
+        .recommendations h3 {
+            margin-top: 0;
+            color: #155724;
+        }
+        
+        .metric-card {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #007bff;
+        }
+        
+        .metric-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .control-group {
+                justify-content: space-between;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Keyword Analysis Dashboard</h1>
+            <p>Client vs Competitors Comparison</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="sortBy">Sort by:</label>
+                <select id="sortBy" onchange="sortTable()">
+                    <option value="keyword">Keyword</option>
+                    <option value="client-repeats">Client Repeats</option>
+                    <option value="client-density">Client Density</option>
+                    <option value="avg-competitor">Avg Competitor Density</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="filterDensity">Min Density:</label>
+                <input type="number" id="filterDensity" step="0.1" placeholder="0.0" onchange="filterTable()">
+            </div>
+            
+            <button class="btn btn-primary" onclick="exportData()">📊 Export Data</button>
+            <button class="btn btn-secondary" onclick="resetFilters()">🔄 Reset</button>
+        </div>
+        
+        <div class="table-container">
+            <table id="keywordTable">
+                <thead>
+                    <tr>
+                        <th>Keyword</th>
+                        <th colspan="2">Your Client</th>
+                        <th colspan="4">Top 1 Competitor</th>
+                        <th colspan="4">Top 2 Competitor</th>
+                        <th colspan="4">Top 3 Competitor</th>
+                        <th colspan="4">Top 4 Competitor</th>
+                        <th colspan="4">Top 5 Competitor</th>
+                        <th colspan="2">Best Competitor</th>
+                    </tr>
+                    <tr style="font-size: 11px; opacity: 0.8;">
+                        <th></th>
+                        <th>Repeats</th>
+                        <th>Density</th>
+                        <th>Repeats</th>
+                        <th>Density</th>
+                        <th style="background: #dc3545; color: white;">Need +R</th>
+                        <th style="background: #dc3545; color: white;">Need +D</th>
+                        <th>Repeats</th>
+                        <th>Density</th>
+                        <th style="background: #dc3545; color: white;">Need +R</th>
+                        <th style="background: #dc3545; color: white;">Need +D</th>
+                        <th>Repeats</th>
+                        <th>Density</th>
+                        <th style="background: #dc3545; color: white;">Need +R</th>
+                        <th style="background: #dc3545; color: white;">Need +D</th>
+                        <th>Repeats</th>
+                        <th>Density</th>
+                        <th style="background: #dc3545; color: white;">Need +R</th>
+                        <th style="background: #dc3545; color: white;">Need +D</th>
+                        <th>Repeats</th>
+                        <th>Density</th>
+                        <th style="background: #dc3545; color: white;">Need +R</th>
+                        <th style="background: #dc3545; color: white;">Need +D</th>
+                        <th style="background: #28a745; color: white;">Max R</th>
+                        <th style="background: #28a745; color: white;">Max D</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="gap-analysis">
+            <h3>📈 Gap Analysis</h3>
+            <div id="gapMetrics">
+                <!-- Metrics will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="recommendations">
+            <h3>💡 Recommendations</h3>
+            <div id="recommendations">
+                <!-- Recommendations will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive keyword data from the images
+        const keywordData = {
+            // Client data
+            client: {
+                insurance: {repeats: 58, density: 4.70},
+                surety: {repeats: 26, density: 2.11},
+                ontario: {repeats: 18, density: 1.46},
+                bond: {repeats: 17, density: 1.38},
+                bonds: {repeats: 13, density: 1.05},
+                roughley: {repeats: 10, density: 0.81},
+                community: {repeats: 8, density: 0.65},
+                commercial: {repeats: 8, density: 0.65},
+                business: {repeats: 7, density: 0.57},
+                auto: {repeats: 7, density: 0.57},
+                october: {repeats: 7, density: 0.57},
+                principal: {repeats: 7, density: 0.57}
+            },
+            
+            // Competitor data
+            competitors: {
+                top1: {
+                    legal: {repeats: 55, density: 5.83},
+                    aid: {repeats: 32, density: 3.39},
+                    find: {repeats: 15, density: 1.59},
+                    services: {repeats: 14, density: 1.48},
+                    last: {repeats: 12, density: 1.27},
+                    'column-break': {repeats: 12, density: 1.27},
+                    issues: {repeats: 12, density: 1.27},
+                    surety: {repeats: 11, density: 1.17},
+                    ontario: {repeats: 10, density: 1.06},
+                    court: {repeats: 9, density: 0.95},
+                    lawyers: {repeats: 9, density: 0.95},
+                    service: {repeats: 7, density: 0.74},
+                    news: {repeats: 7, density: 0.74},
+                    counsel: {repeats: 7, density: 0.74},
+                    duty: {repeats: 7, density: 0.74},
+                    roster: {repeats: 7, density: 0.74}
+                },
+                
+                top2: {
+                    surety: {repeats: 18, density: 2.48},
+                    services: {repeats: 12, density: 1.65},
+                    bond: {repeats: 11, density: 1.52},
+                    view: {repeats: 8, density: 1.10},
+                    planning: {repeats: 8, density: 1.10},
+                    big: {repeats: 7, density: 0.96},
+                    regulation: {repeats: 7, density: 0.96},
+                    legal: {repeats: 6, density: 0.83},
+                    construction: {repeats: 6, density: 0.83},
+                    international: {repeats: 5, density: 0.69},
+                    act: {repeats: 5, density: 0.69},
+                    guaranteed: {repeats: 5, density: 0.69},
+                    bonds: {repeats: 5, density: 0.69}
+                },
+                
+                top3: {
+                    bond: {repeats: 17, density: 1.94},
+                    search: {repeats: 12, density: 1.37},
+                    municipality: {repeats: 10, density: 1.14},
+                    insurer: {repeats: 8, density: 0.91},
+                    surety: {repeats: 8, density: 0.91},
+                    act: {repeats: 8, density: 0.91},
+                    principal: {repeats: 7, density: 0.80},
+                    terms: {repeats: 6, density: 0.68},
+                    payment: {repeats: 6, density: 0.68},
+                    november: {repeats: 5, density: 0.57},
+                    day: {repeats: 5, density: 0.57},
+                    guaranteed: {repeats: 5, density: 0.57}
+                },
+                
+                top4: {
+                    insurance: {repeats: 85, density: 4.70},
+                    bonds: {repeats: 55, density: 3.04},
+                    bond: {repeats: 43, density: 2.38},
+                    surety: {repeats: 29, density: 1.60},
+                    contract: {repeats: 19, density: 1.05},
+                    company: {repeats: 16, density: 0.88},
+                    construction: {repeats: 15, density: 0.83},
+                    contractor: {repeats: 13, density: 0.72},
+                    facility: {repeats: 13, density: 0.72},
+                    commercial: {repeats: 9, density: 0.50},
+                    bonding: {repeats: 9, density: 0.50},
+                    financial: {repeats: 9, density: 0.50}
+                },
+                
+                top5: {
+                    insurance: {repeats: 263, density: 7.50},
+                    lease: {repeats: 54, density: 1.54},
+                    liability: {repeats: 48, density: 1.37},
+                    business: {repeats: 38, density: 1.08},
+                    surety: {repeats: 35, density: 1.00},
+                    bond: {repeats: 26, density: 0.74},
+                    team: {repeats: 22, density: 0.63},
+                    commercial: {repeats: 19, density: 0.54},
+                    bonds: {repeats: 19, density: 0.54},
+                    professional: {repeats: 18, density: 0.51}
+                }
+            }
+        };
+
+        // Get all unique keywords
+        function getAllKeywords() {
+            const keywords = new Set();
+            
+            // Add client keywords
+            Object.keys(keywordData.client).forEach(keyword => keywords.add(keyword));
+            
+            // Add competitor keywords
+            Object.values(keywordData.competitors).forEach(competitor => {
+                Object.keys(competitor).forEach(keyword => keywords.add(keyword));
+            });
+            
+            return Array.from(keywords).sort();
+        }
+
+        // Calculate gap to match competitor
+        function calculateGapToMatch(clientValue, competitorValue) {
+            const gap = Math.max(0, competitorValue - clientValue);
+            return gap > 0 ? `+${gap}` : '✓';
+        }
+
+        // Get best competitor performance for keyword
+        function getBestCompetitorPerformance(keyword) {
+            let maxRepeats = 0;
+            let maxDensity = 0;
+            
+            Object.values(keywordData.competitors).forEach(competitor => {
+                if (competitor[keyword]) {
+                    maxRepeats = Math.max(maxRepeats, competitor[keyword].repeats);
+                    maxDensity = Math.max(maxDensity, competitor[keyword].density);
+                }
+            });
+            
+            return { maxRepeats, maxDensity };
+        }
+
+        // Calculate opportunity score
+        function calculateOpportunityScore(keyword) {
+            const clientDensity = keywordData.client[keyword]?.density || 0;
+            const competitorDensities = [];
+            
+            Object.values(keywordData.competitors).forEach(competitor => {
+                if (competitor[keyword]) {
+                    competitorDensities.push(competitor[keyword].density);
+                }
+            });
+            
+            if (competitorDensities.length === 0) return 0;
+            
+            const avgCompetitorDensity = competitorDensities.reduce((a, b) => a + b, 0) / competitorDensities.length;
+            const maxCompetitorDensity = Math.max(...competitorDensities);
+            
+            // Opportunity score = (max competitor density - client density) / max competitor density * 100
+            return maxCompetitorDensity > 0 ? Math.max(0, ((maxCompetitorDensity - clientDensity) / maxCompetitorDensity * 100)) : 0;
+        }
+
+        // Get density class for styling
+        function getDensityClass(density) {
+            if (density >= 2.0) return 'density-high';
+            if (density >= 1.0) return 'density-medium';
+            return 'density-low';
+        }
+
+        // Get gap styling
+        function getGapStyling(gap) {
+            if (gap === '✓') return 'background: #d4edda; color: #155724; font-weight: 600;';
+            const numGap = parseFloat(gap.replace('+', ''));
+            if (numGap > 20) return 'background: #f8d7da; color: #721c24; font-weight: 600;';
+            if (numGap > 10) return 'background: #fff3cd; color: #856404; font-weight: 600;';
+            return 'background: #d1ecf1; color: #0c5460; font-weight: 600;';
+        }
+
+        // Populate table
+        function populateTable() {
+            const tbody = document.getElementById('tableBody');
+            const keywords = getAllKeywords();
+            
+            tbody.innerHTML = '';
+            
+            keywords.forEach(keyword => {
+                const row = document.createElement('tr');
+                
+                // Client data
+                const clientData = keywordData.client[keyword] || {repeats: 0, density: 0};
+                
+                // Competitor data
+                const comp1 = keywordData.competitors.top1[keyword] || {repeats: 0, density: 0};
+                const comp2 = keywordData.competitors.top2[keyword] || {repeats: 0, density: 0};
+                const comp3 = keywordData.competitors.top3[keyword] || {repeats: 0, density: 0};
+                const comp4 = keywordData.competitors.top4[keyword] || {repeats: 0, density: 0};
+                const comp5 = keywordData.competitors.top5[keyword] || {repeats: 0, density: 0};
+                
+                // Calculate gaps for each competitor
+                const gap1R = calculateGapToMatch(clientData.repeats, comp1.repeats);
+                const gap1D = calculateGapToMatch(clientData.density, comp1.density);
+                const gap2R = calculateGapToMatch(clientData.repeats, comp2.repeats);
+                const gap2D = calculateGapToMatch(clientData.density, comp2.density);
+                const gap3R = calculateGapToMatch(clientData.repeats, comp3.repeats);
+                const gap3D = calculateGapToMatch(clientData.density, comp3.density);
+                const gap4R = calculateGapToMatch(clientData.repeats, comp4.repeats);
+                const gap4D = calculateGapToMatch(clientData.density, comp4.density);
+                const gap5R = calculateGapToMatch(clientData.repeats, comp5.repeats);
+                const gap5D = calculateGapToMatch(clientData.density, comp5.density);
+                
+                // Get best competitor performance
+                const bestPerf = getBestCompetitorPerformance(keyword);
+                
+                row.innerHTML = `
+                    <td class="keyword-cell">${keyword}</td>
+                    <td class="client-data">${clientData.repeats}</td>
+                    <td class="client-data ${getDensityClass(clientData.density)}">${clientData.density}%</td>
+                    
+                    <td class="competitor-data">${comp1.repeats}</td>
+                    <td class="competitor-data ${getDensityClass(comp1.density)}">${comp1.density}%</td>
+                    <td class="competitor-data" style="${getGapStyling(gap1R)}">${gap1R}</td>
+                    <td class="competitor-data" style="${getGapStyling(gap1D)}">${gap1D}%</td>
+                    
+                    <td class="competitor-data">${comp2.repeats}</td>
+                    <td class="competitor-data ${getDensityClass(comp2.density)}">${comp2.density}%</td>
+                    <td class="competitor-data" style="${getGapStyling(gap2R)}">${gap2R}</td>
+                    <td class="competitor-data" style="${getGapStyling(gap2D)}">${gap2D}%</td>
+                    
+                    <td class="competitor-data">${comp3.repeats}</td>
+                    <td class="competitor-data ${getDensityClass(comp3.density)}">${comp3.density}%</td>
+                    <td class="competitor-data" style="${getGapStyling(gap3R)}">${gap3R}</td>
+                    <td class="competitor-data" style="${getGapStyling(gap3D)}">${gap3D}%</td>
+                    
+                    <td class="competitor-data">${comp4.repeats}</td>
+                    <td class="competitor-data ${getDensityClass(comp4.density)}">${comp4.density}%</td>
+                    <td class="competitor-data" style="${getGapStyling(gap4R)}">${gap4R}</td>
+                    <td class="competitor-data" style="${getGapStyling(gap4D)}">${gap4D}%</td>
+                    
+                    <td class="competitor-data">${comp5.repeats}</td>
+                    <td class="competitor-data ${getDensityClass(comp5.density)}">${comp5.density}%</td>
+                    <td class="competitor-data" style="${getGapStyling(gap5R)}">${gap5R}</td>
+                    <td class="competitor-data" style="${getGapStyling(gap5D)}">${gap5D}%</td>
+                    
+                    <td class="competitor-data" style="background: #28a745; color: white; font-weight: 600;">${bestPerf.maxRepeats}</td>
+                    <td class="competitor-data" style="background: #28a745; color: white; font-weight: 600;">${bestPerf.maxDensity}%</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Generate gap analysis
+        function generateGapAnalysis() {
+            const gapMetrics = document.getElementById('gapMetrics');
+            const keywords = getAllKeywords();
+            
+            let totalOpportunity = 0;
+            let highOpportunityKeywords = 0;
+            let clientTotalDensity = 0;
+            let competitorAvgDensity = 0;
+            let competitorCount = 0;
+            
+            keywords.forEach(keyword => {
+                const opportunityScore = calculateOpportunityScore(keyword);
+                totalOpportunity += opportunityScore;
+                
+                if (opportunityScore > 50) highOpportunityKeywords++;
+                
+                const clientData = keywordData.client[keyword];
+                if (clientData) clientTotalDensity += clientData.density;
+                
+                Object.values(keywordData.competitors).forEach(competitor => {
+                    if (competitor[keyword]) {
+                        competitorAvgDensity += competitor[keyword].density;
+                        competitorCount++;
+                    }
+                });
+            });
+            
+            const avgOpportunity = totalOpportunity / keywords.length;
+            const avgCompetitorDensity = competitorAvgDensity / competitorCount;
+            
+            gapMetrics.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-value">${avgOpportunity.toFixed(1)}%</div>
+                    <div class="metric-label">Avg Opportunity</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${highOpportunityKeywords}</div>
+                    <div class="metric-label">High Opportunity Keywords</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${clientTotalDensity.toFixed(1)}%</div>
+                    <div class="metric-label">Client Total Density</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${avgCompetitorDensity.toFixed(1)}%</div>
+                    <div class="metric-label">Avg Competitor Density</div>
+                </div>
+            `;
+        }
+
+        // Generate recommendations
+        function generateRecommendations() {
+            const recommendations = document.getElementById('recommendations');
+            const keywords = getAllKeywords();
+            
+            // Find top opportunities
+            const opportunities = keywords.map(keyword => ({
+                keyword,
+                score: calculateOpportunityScore(keyword)
+            })).sort((a, b) => b.score - a.score).slice(0, 5);
+            
+            // Find client strengths
+            const strengths = Object.entries(keywordData.client)
+                .sort((a, b) => b[1].density - a[1].density)
+                .slice(0, 3);
+            
+            recommendations.innerHTML = `
+                <h4>🎯 Immediate Action Items (Biggest Gaps to Close):</h4>
+                <ul id="biggestGaps">
+                    <!-- Will be populated by JavaScript -->
+                </ul>
+                
+                <h4>💪 Current Strengths (Where You Match/Beat Competitors):</h4>
+                <ul id="currentStrengths">
+                    <!-- Will be populated by JavaScript -->
+                </ul>
+                
+                <h4>📈 Quick Wins (Small Gaps, High Impact):</h4>
+                <ul id="quickWins">
+                    <!-- Will be populated by JavaScript -->
+                </ul>
+                
+                <h4>📋 Strategic Recommendations:</h4>
+                <ul>
+                    <li><strong>Priority 1:</strong> Focus on keywords with small gaps but high competitor performance</li>
+                    <li><strong>Priority 2:</strong> Gradually increase density for medium-gap keywords</li>
+                    <li><strong>Priority 3:</strong> Maintain performance in areas where you already lead</li>
+                    <li><strong>Content Strategy:</strong> Analyze competitor pages with highest-performing keywords</li>
+                    <li><strong>Monitoring:</strong> Track progress monthly and adjust targets based on results</li>
+                </ul>
+            `;
+        }
+
+        // Sort table functionality
+        function sortTable() {
+            const sortBy = document.getElementById('sortBy').value;
+            const tbody = document.getElementById('tableBody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            rows.sort((a, b) => {
+                let aVal, bVal;
+                
+                switch(sortBy) {
+                    case 'keyword':
+                        aVal = a.cells[0].textContent.toLowerCase();
+                        bVal = b.cells[0].textContent.toLowerCase();
+                        return aVal.localeCompare(bVal);
+                    case 'client-repeats':
+                        aVal = parseInt(a.cells[1].textContent) || 0;
+                        bVal = parseInt(b.cells[1].textContent) || 0;
+                        return bVal - aVal;
+                    case 'client-density':
+                        aVal = parseFloat(a.cells[2].textContent) || 0;
+                        bVal = parseFloat(b.cells[2].textContent) || 0;
+                        return bVal - aVal;
+                    case 'avg-competitor':
+                        aVal = parseFloat(a.cells[a.cells.length - 1].textContent) || 0;
+                        bVal = parseFloat(b.cells[b.cells.length - 1].textContent) || 0;
+                        return bVal - aVal;
+                }
+            });
+            
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // Filter table functionality
+        function filterTable() {
+            const minDensity = parseFloat(document.getElementById('filterDensity').value) || 0;
+            const rows = document.querySelectorAll('#tableBody tr');
+            
+            rows.forEach(row => {
+                const clientDensity = parseFloat(row.cells[2].textContent) || 0;
+                row.style.display = clientDensity >= minDensity ? '' : 'none';
+            });
+        }
+
+        // Reset filters
+        function resetFilters() {
+            document.getElementById('sortBy').value = 'keyword';
+            document.getElementById('filterDensity').value = '';
+            populateTable();
+        }
+
+        // Export data (simplified for demo)
+        function exportData() {
+            alert('Export functionality would generate a CSV/Excel file with all the keyword data for further analysis in your preferred spreadsheet application.');
+        }
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTable();
+            generateGapAnalysis();
+            generateRecommendations();
+        });
+    </script>
+</body>
+</html>
